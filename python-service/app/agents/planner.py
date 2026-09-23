@@ -17,11 +17,11 @@ SYSTEM_PROMPT = (
 )
 
 _TEMPLATES = (
-    "What is {topic}?",
-    "What are the key developments and history of {topic}?",
-    "What are the main applications and impact of {topic}?",
-    "What are the challenges and criticisms of {topic}?",
-    "What is the future outlook for {topic}?",
+    "Background and key concepts: {topic}",
+    "History and key developments: {topic}",
+    "Applications and real-world impact: {topic}",
+    "Challenges, risks and criticisms: {topic}",
+    "Future outlook: {topic}",
 )
 
 
