@@ -1,0 +1,35 @@
+server:
+  port: ${SERVER_PORT:8080}
+  shutdown: graceful
+
+spring:
+  application:
+    name: research-gateway
+  jackson:
+    default-property-inclusion: non_null
+
+agent-service:
+  base-url: ${AGENT_SERVICE_URL:http://localhost:8000}
+  connect-timeout: ${AGENT_SERVICE_CONNECT_TIMEOUT:5s}
+  read-timeout: ${AGENT_SERVICE_READ_TIMEOUT:120s}
+
+research:
+  worker-threads: ${RESEARCH_WORKER_THREADS:4}
+  max-stored-jobs: ${RESEARCH_MAX_STORED_JOBS:500}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      probes:
+        enabled: true
+
+logging:
+  structured:
+    format:
+      console: ${LOG_FORMAT:ecs}
+  level:
+    root: ${LOG_LEVEL:INFO}
