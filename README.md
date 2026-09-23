@@ -1,6 +1,25 @@
-# Multi-Agent Research System
+<div align="center">
+
+# 🔬 Multi-Agent Research System
+
+**Ask a question. A team of AI agents plans, searches, analyzes and writes you a cited report.**
 
 [![CI](https://github.com/Prajwal-Pratap-Yadav/multi-agent-research-system/actions/workflows/ci.yml/badge.svg)](https://github.com/Prajwal-Pratap-Yadav/multi-agent-research-system/actions/workflows/ci.yml)
+![Java](https://img.shields.io/badge/Java-21-ED8B00?logo=openjdk&logoColor=white)
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.4-6DB33F?logo=springboot&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3.11-3776AB?logo=python&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-0.115-009688?logo=fastapi&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?logo=docker&logoColor=white)
+![Coverage](https://img.shields.io/badge/coverage-96%25%20py%20%7C%2091%25%20java-brightgreen)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
+[Architecture](#-architecture) · [Quick start](#-quick-start-docker) · [Example output](#-example-output) · [API](#-api-reference) · [Configuration](#-configuration)
+
+</div>
+
+---
+
+## ✨ Highlights
 
 A polyglot, containerized research assistant. You ask a question; a team of
 specialized agents plans the research, gathers sources, extracts the evidence and
@@ -17,7 +36,7 @@ what each agent did and how long it took.
 - **Tested & shipped**: 44 unit/integration tests (96% Python / 91% Java coverage),
   multi-stage non-root Docker images, one-command `docker compose up`, GitHub Actions CI
 
-## Architecture
+## 🧩 Architecture
 
 ```mermaid
 flowchart LR
@@ -70,7 +89,7 @@ flowchart LR
 | LLM error or timeout | Logged; the agent falls back to its heuristic path |
 | Unexpected exception | Job marked `FAILED` with a generic message (no internals leaked) |
 
-## Quick start (Docker)
+## 🚀 Quick start (Docker)
 
 ```bash
 cp .env.example .env          # optionally add ANTHROPIC_API_KEY
@@ -89,7 +108,7 @@ curl -s -X POST http://localhost:8080/api/research \
 curl -s http://localhost:8080/api/research/<id> | jq -r .report.report_markdown
 ```
 
-## Example output
+## 📄 Example output
 
 Trace and report from a real run (heuristic mode, no API key):
 
@@ -126,7 +145,7 @@ A qubit is the basic unit of quantum information in quantum computing. [2]
 With `ANTHROPIC_API_KEY` set, the planner produces question-specific sub-questions and
 the writer turns the same cited findings into flowing prose.
 
-## API reference
+## 📡 API reference
 
 ### Gateway (`:8080`)
 
@@ -147,7 +166,7 @@ Job `status` is one of `PENDING`, `RUNNING`, `COMPLETED`, `FAILED`.
 | `GET` | `/health` | Liveness |
 | `GET` | `/docs` | Interactive OpenAPI docs |
 
-## Configuration
+## 🔧 Configuration
 
 All variables are optional; see [`.env.example`](.env.example).
 
@@ -164,7 +183,7 @@ All variables are optional; see [`.env.example`](.env.example).
 | `RESEARCH_WORKER_THREADS` | `4` | gateway | Concurrent jobs |
 | `RESEARCH_MAX_STORED_JOBS` | `500` | gateway | Jobs retained in memory (oldest evicted) |
 
-## Local development
+## 💻 Local development
 
 **Agent service**
 
@@ -185,7 +204,7 @@ mvn verify                       # tests + JaCoCo report in target/site/jacoco
 AGENT_SERVICE_URL=http://localhost:8000 mvn spring-boot:run
 ```
 
-## Project structure
+## 📁 Project structure
 
 ```
 .
@@ -207,7 +226,7 @@ AGENT_SERVICE_URL=http://localhost:8000 mvn spring-boot:run
 └── .github/workflows/ci.yml
 ```
 
-## Design notes and limitations
+## 🧭 Design notes and limitations
 
 - **Why two services?** The gateway owns client-facing concerns (job lifecycle,
   validation, backpressure); the Python service owns the agent logic, where the AI
@@ -220,3 +239,7 @@ AGENT_SERVICE_URL=http://localhost:8000 mvn spring-boot:run
   Postgres.
 - **No authentication** is included; put the gateway behind an API gateway or add
   Spring Security before exposing it publicly.
+
+## 📜 License
+
+Released under the [MIT License](LICENSE). Built by **Prajwal Pratap Yadav**.
