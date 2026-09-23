@@ -1,0 +1,28 @@
+services:
+  agents:
+    build: ./python-service
+    environment:
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      ANTHROPIC_MODEL: ${ANTHROPIC_MODEL:-claude-sonnet-5}
+      SEARCH_BASE_URL: ${SEARCH_BASE_URL:-https://en.wikipedia.org/w/api.php}
+      MAX_SOURCES_PER_QUESTION: ${MAX_SOURCES_PER_QUESTION:-3}
+      HTTP_TIMEOUT_SECONDS: ${HTTP_TIMEOUT_SECONDS:-15}
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
+    expose:
+      - "8000"
+    restart: unless-stopped
+
+  gateway:
+    build: ./backend
+    depends_on:
+      agents:
+        condition: service_healthy
+    environment:
+      AGENT_SERVICE_URL: http://agents:8000
+      AGENT_SERVICE_READ_TIMEOUT: ${AGENT_SERVICE_READ_TIMEOUT:-120s}
+      RESEARCH_WORKER_THREADS: ${RESEARCH_WORKER_THREADS:-4}
+      RESEARCH_MAX_STORED_JOBS: ${RESEARCH_MAX_STORED_JOBS:-500}
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
+    ports:
+      - "${GATEWAY_PORT:-8080}:8080"
+    restart: unless-stopped
